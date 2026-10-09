@@ -28,8 +28,6 @@ OUTPUT_FILENAME = "lastSong.wav"
 audio = pyaudio.PyAudio()
 stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
 
-listening_hist = []
-
 # Await keyboard press: space to begin recording. Record for 15 seconds, or until space is pressed again, 
 # then save clip to OUTPUT_FILENAME. Will replace previous file.
 
@@ -70,10 +68,14 @@ async def main():
 
   shazam = Shazam()
   out = await shazam.recognize(OUTPUT_FILENAME)
-  print('Song: ', out['track']['title'])
-  print('Artist: ', out['track']['subtitle'])
-  listening_hist.append([out['track']['title'], out['track']['subtitle']])
-  print('Listening history: ', listening_hist)
+  # Store output song and artist name and print to console
+  song = out['track']['title']
+  artist = out['track']['subtitle']
+  print('Song: ', song)
+  print('Artist: ', artist)
+  # Append listening history text file with song and artist name on new line
+  with open('Listening History.txt', "a", encoding="utf-8") as f: f.write(f"{song} - {artist}\n")
+  
 
 def run_async():
     loop = asyncio.get_event_loop()
