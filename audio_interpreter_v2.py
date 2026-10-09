@@ -35,10 +35,10 @@ frames = []
 print("Press SPACE to start recording.")
 
 keyboard.wait('space')
-print("Recording for 10 seconds.")
+print("Recording for 20 seconds.")
 # In order to prevent debouncing:
 time.sleep(0.2)
-# Initialise 10 second counter
+# Initialise 20 second counter
 start_time = time.time()
 
 while True:
@@ -47,7 +47,7 @@ while True:
         frames.append(data)
     except KeyboardInterrupt:
         break
-    if time.time() - start_time >= 10:
+    if time.time() - start_time >= 20:
         print("Stopping recording.") 
         time.sleep(0.2)
         break
